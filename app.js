@@ -2,6 +2,7 @@
 const firebaseConfig = {
   apiKey: "AIzaSyDaya3CCviWxqqfzy1TvfbI_rZbSFeSxws",
   authDomain: "instant-chat-4af7a.firebaseapp.com",
+  databaseURL: "https://instant-chat-4af7a.firebaseio.com",
   projectId: "instant-chat-4af7a",
   storageBucket: "instant-chat-4af7a.appspot.com",
   messagingSenderId: "387329013608",
