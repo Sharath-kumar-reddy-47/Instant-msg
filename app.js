@@ -6,7 +6,6 @@ const firebaseConfig = {
   storageBucket: "instant-chat-4af7a.appspot.com",
   messagingSenderId: "387329013608",
   appId: "1:387329013608:web:c3fa1de0b5c72b719488dd",
-  measurementId: "G-2T37HGPNGS"
 };
 
 // Initialize Firebase
@@ -36,7 +35,12 @@ submitBtn.addEventListener('click', () => {
         postsRef.push({
             content: postContent,
             timestamp: Date.now()
+        }).then(() => {
+            console.log("Post submitted:", postContent);
+        }).catch((error) => {
+            console.error("Error submitting post:", error);
         });
         newPostInput.value = ''; // Clear the input field
     }
 });
+
