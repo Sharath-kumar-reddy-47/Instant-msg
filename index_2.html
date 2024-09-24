@@ -12,6 +12,7 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             // Firebase configuration
+
             const firebaseConfig = {
                 apiKey: "AIzaSyDaya3CCviWxqqfzy1TvfbI_rZbSxws",
                 authDomain: "instant-chat-4af7a.firebaseapp.com",
@@ -25,7 +26,7 @@
             // Initialize Firebase
             const app = initializeApp(firebaseConfig);
             const database = getDatabase(app);
-            const postsRef = ref(database, 'posts');  // Refers to the 'posts' node in the database
+            const postsRef = ref(database, 'posts');
             const postsDiv = document.getElementById('posts');
             const newPostInput = document.getElementById('newPost');
             const submitBtn = document.getElementById('submitBtn');
