@@ -24,8 +24,8 @@
 
             const app = initializeApp(firebaseConfig);
             const database = getDatabase(app);
-            const postsRef = ref(database, 'posts');
-            const postsDiv = document.getElementById('posts');
+            const postsRef = ref(database, 'Posts');
+            const postsDiv = document.getElementById('Posts');
             const newPostInput = document.getElementById('newPost');
             const submitBtn = document.getElementById('submitBtn');
 
@@ -70,7 +70,7 @@
             submitBtn.addEventListener('click', () => {
                 const postContent = newPostInput.value;
                 if (postContent.trim() !== '') {
-                    set(ref(database, 'posts/' + Date.now()), {
+                    set(ref(database, 'Posts/' + Date.now()), {
                         content: postContent,
                         timestamp: Date.now()
                     }).then(() => {

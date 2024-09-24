@@ -39,7 +39,7 @@
             const password = document.getElementById('password').value;
 
             // Check user credentials in Firebase
-            const userRef = ref(database, 'posts/users/' + phone);
+            const userRef = ref(database, 'users/' + phone);
             get(child(userRef, 'password')).then((snapshot) => {
                 if (snapshot.exists()) {
                     const storedPassword = snapshot.val();
