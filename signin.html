@@ -5,64 +5,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign In</title>
     <link rel="stylesheet" href="style.css">
-    <a href="index.html">Back to Home</a>
 </head>
 <body>
-    <h1>Sign In</h1>
-    <div>
-        <label for="phone_number">Phone Number:</label>
-        <input type="text" id="phone_number" placeholder="Enter your phone number (with country code)">
-    </div>
-    <div>
-        <label for="password">Password:</label>
-        <input type="password" id="password" placeholder="Enter your password">
-    </div>
-    <button id="signInBtn">Sign In</button>
+    <h2>Sign In</h2>
+    <form id="signinForm">
+        <input type="text" id="phone" placeholder="Phone Number" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <button type="submit">Sign In</button>
+    </form>
+    <p>If this is your first visit, you need to sign up.</p>
+    <button id="signUpButton">Sign Up</button>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js";
-        import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-database.js";
+        import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-            databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            databaseURL: "YOUR_DATABASE_URL",
             projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            storageBucket: "YOUR_STORAGE_BUCKET",
             messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-            appId: "YOUR_APP_ID"
+            appId: "YOUR_APP_ID",
         };
 
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
 
-        document.getElementById('signInBtn').addEventListener('click', () => {
-            const phoneNumber = document.getElementById('phone_number').value;
+        document.getElementById('signinForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const phone = document.getElementById('phone').value;
             const password = document.getElementById('password').value;
 
-            if (phoneNumber && password) {
-                const userRef = ref(database, 'users/' + phoneNumber);
-                get(userRef).then((snapshot) => {
-                    if (snapshot.exists()) {
-                        const user = snapshot.val();
-                        if (user.status === 'approved' && user.password === password) {
-                            alert("Sign in successful!");
-                            // Redirect to the content page
-                            window.location.href = "content.html";
-                        } else if (user.status === 'pending') {
-                            alert("Your sign-up is still pending approval.");
-                        } else {
-                            alert("Incorrect password or your sign-up was rejected.");
-                        }
+            // Check user credentials in Firebase
+            const userRef = ref(database, 'users/' + phone);
+            get(child(userRef, 'password')).then((snapshot) => {
+                if (snapshot.exists()) {
+                    const storedPassword = snapshot.val();
+                    if (storedPassword === password) {
+                        // Redirect to index page on successful sign in
+                        window.location.href = 'index.html'; 
                     } else {
-                        alert("User not found.");
+                        alert('Incorrect password.');
                     }
-                }).catch((error) => {
-                    console.error("Error signing in:", error);
-                });
-            } else {
-                alert("Please enter both phone number and password.");
-            }
+                } else {
+                    alert('User not found.');
+                }
+            }).catch((error) => {
+                console.error("Error signing in:", error);
+            });
+        });
+
+        // Redirect to the signup page when the button is clicked
+        document.getElementById('signUpButton').addEventListener('click', function() {
+            window.location.href = 'signup.html';
         });
     </script>
 </body>

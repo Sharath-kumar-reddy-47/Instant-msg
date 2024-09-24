@@ -5,35 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
     <link rel="stylesheet" href="style.css">
-    <a href="index.html">Back to Home</a>
 </head>
 <body>
-    <h1>Sign Up</h1>
-    <div>
-        <label for="name">Name:</label>
-        <input type="text" id="name" placeholder="Enter your name">
-    </div>
-    <div>
-        <label for="age">Age:</label>
-        <input type="number" id="age" placeholder="Enter your age">
-    </div>
-    <div>
-        <label for="college_name">College Name:</label>
-        <input type="text" id="college_name" placeholder="Enter your college name">
-    </div>
-    <div>
-        <label for="department">Department:</label>
-        <input type="text" id="department" placeholder="Enter your department">
-    </div>
-    <div>
-        <label for="phone_number">Phone Number:</label>
-        <input type="text" id="phone_number" placeholder="Enter your phone number (with country code)">
-    </div>
-    <div>
-        <label for="password">Password:</label>
-        <input type="password" id="password" placeholder="Enter your password">
-    </div>
-    <button id="signUpBtn">Sign Up</button>
+    <h2>Sign Up</h2>
+    <form id="signupForm">
+        <input type="text" id="name" placeholder="Name" required>
+        <input type="number" id="age" placeholder="Age" required>
+        <input type="text" id="college" placeholder="College Name" required>
+        <input type="text" id="department" placeholder="Department" required>
+        <input type="text" id="phone" placeholder="Phone Number" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <button type="submit">Sign Up</button>
+    </form>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js";
@@ -41,41 +24,41 @@
 
         const firebaseConfig = {
             apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-            databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            databaseURL: "YOUR_DATABASE_URL",
             projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            storageBucket: "YOUR_STORAGE_BUCKET",
             messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-            appId: "YOUR_APP_ID"
+            appId: "YOUR_APP_ID",
         };
 
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
 
-        document.getElementById('signUpBtn').addEventListener('click', () => {
+        document.getElementById('signupForm').addEventListener('submit', function(event) {
+            event.preventDefault();
             const name = document.getElementById('name').value;
             const age = document.getElementById('age').value;
-            const collegeName = document.getElementById('college_name').value;
+            const college = document.getElementById('college').value;
             const department = document.getElementById('department').value;
-            const phoneNumber = document.getElementById('phone_number').value;
+            const phone = document.getElementById('phone').value;
             const password = document.getElementById('password').value;
 
-            if (name && age && collegeName && department && phoneNumber && password) {
-                set(ref(database, 'users/' + phoneNumber), {
-                    name,
-                    age,
-                    college_name: collegeName,
-                    department,
-                    password, // In a real-world scenario, hash the password before storing
-                    status: 'pending'
-                }).then(() => {
-                    alert("Sign-up successful. Please wait for confirmation.");
-                }).catch((error) => {
-                    console.error("Error signing up:", error);
-                });
-            } else {
-                alert("Please fill all the fields.");
-            }
+            // Save user data in Firebase
+            set(ref(database, 'users/' + phone), {
+                name: name,
+                age: age,
+                college: college,
+                department: department,
+                phone: phone,
+                password: password,
+                approved: true // Automatically approved for simplicity
+            }).then(() => {
+                alert('Sign up completed! Redirecting to sign in...');
+                window.location.href = 'signin.html'; // Redirect to sign-in page
+            }).catch((error) => {
+                console.error("Error signing up:", error);
+            });
         });
     </script>
 </body>
