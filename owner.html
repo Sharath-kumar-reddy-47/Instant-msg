@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Users</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Confirm Users</h1>
+    <div id="users"></div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js";
+        import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        const usersDiv = document.getElementById('users');
+
+        const usersRef = ref(database, 'users');
+        onValue(usersRef, (snapshot) => {
+            usersDiv.innerHTML = ''; // Clear previous list
+            snapshot.forEach((childSnapshot) => {
+                const user = childSnapshot.val();
+                const phoneNumber = childSnapshot.key;
+
+                if (user.status === 'pending') {
+                    const userElement = document.createElement('div');
+                    userElement.innerHTML = `
+                        <p>${user.name}, ${user.age}, ${user.college_name}, ${user.department}</p>
+                        <button data-phone="${phoneNumber}" class="approveBtn">Approve</button>
+                        <button data-phone="${phoneNumber}" class="rejectBtn">Reject</button>
+                    `;
+                    usersDiv.appendChild(userElement);
+                }
+            });
+
+            document.querySelectorAll('.approveBtn').forEach((btn) => {
+                btn.addEventListener('click', (e) => {
+                    const phoneNumber = e.target.getAttribute('data-phone');
+                    update(ref(database, 'users/' + phoneNumber), { status: 'approved' })
+                        .then(() => alert("User approved"));
+                });
+            });
+
+            document.querySelectorAll('.rejectBtn').forEach((btn) => {
+                btn.addEventListener('click', (e) => {
+                    const phoneNumber = e.target.getAttribute('data-phone');
+                    update(ref(database, 'users/' + phoneNumber), { status: 'rejected' })
+                        .then(() => alert("User rejected"));
+                });
+            });
+        });
+    </script>
+</body>
+</html>
