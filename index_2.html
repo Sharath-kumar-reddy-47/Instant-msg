@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Instant Chat</title>
-    <!-- Link to external CSS -->
     <link rel="stylesheet" href="style.css">
 
     <script type="module">
@@ -25,48 +24,35 @@
             const app = initializeApp(firebaseConfig);
             const database = getDatabase(app);
             const postsRef = ref(database, 'Posts');
-            const postsDiv = document.getElementById('Posts');
+            const postsDiv = document.getElementById('posts');
             const newPostInput = document.getElementById('newPost');
             const submitBtn = document.getElementById('submitBtn');
 
-            // Function to auto-detect URLs and make them clickable
             function autoDetectUrls(text) {
                 const urlPattern = /(https?:\/\/[^\s]+)/g;
                 return text.replace(urlPattern, '<a href="$1" target="_blank">$1</a>');
             }
 
-            // Function to detect and style text with double and single quotes
             function styleQuotes(text) {
                 const doubleQuotePattern = /"(.*?)"/g;
                 const singleQuotePattern = /'(.*?)'/g;
-
-                // Make double-quoted text bold
                 text = text.replace(doubleQuotePattern, '<b>"$1"</b>');
-
-                // Make single-quoted text light gray
                 text = text.replace(singleQuotePattern, '<span class="light-text">\'$1\'</span>');
-
                 return text;
             }
 
-            // Function to apply both auto URL detection and quote styling
             function processText(text) {
                 text = autoDetectUrls(text);
                 return styleQuotes(text);
             }
 
-            // Fetch and display posts in real-time
             onChildAdded(postsRef, (snapshot) => {
                 const post = snapshot.val();
                 const postElement = document.createElement('div');
-                
-                // Process text for URLs and quotes
                 postElement.innerHTML = processText(post.content);
-                
                 postsDiv.appendChild(postElement);
             });
 
-            // Submit a new post
             submitBtn.addEventListener('click', () => {
                 const postContent = newPostInput.value;
                 if (postContent.trim() !== '') {
