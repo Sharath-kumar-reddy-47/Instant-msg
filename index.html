@@ -4,58 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Instant Chat</title>
-    <!-- Include Firebase libraries -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js";
         import { getDatabase, ref, set, onChildAdded } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-database.js";
 
-        // Your Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyDaya3CCviWxqqfzy1TvfbI_rZbSFeSxws",
-            authDomain: "instant-chat-4af7a.firebaseapp.com",
-            databaseURL: "https://instant-chat-4af7a-default-rtdb.firebaseio.com/",
-            projectId: "instant-chat-4af7a",
-            storageBucket: "instant-chat-4af7a.appspot.com",
-            messagingSenderId: "387329013608",
-            appId: "1:387329013608:web:c3fa1de0b5c72b719488dd",
-        };
+        document.addEventListener('DOMContentLoaded', () => {
+            const firebaseConfig = {
+                apiKey: "AIzaSyDaya3CCviWxqqfzy1TvfbI_rZbSFeSxws",
+                authDomain: "instant-chat-4af7a.firebaseapp.com",
+                databaseURL: "https://instant-chat-4af7a-default-rtdb.firebaseio.com/",
+                projectId: "instant-chat-4af7a",
+                storageBucket: "instant-chat-4af7a.appspot.com",
+                messagingSenderId: "387329013608",
+                appId: "1:387329013608:web:c3fa1de0b5c72b719488dd",
+            };
 
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const database = getDatabase(app);
+            const app = initializeApp(firebaseConfig);
+            const database = getDatabase(app);
+            const postsRef = ref(database, 'posts');
+            const postsDiv = document.getElementById('posts');
+            const newPostInput = document.getElementById('newPost');
+            const submitBtn = document.getElementById('submitBtn');
 
-        // Reference to the 'posts' section in the Firebase Database
-        const postsRef = ref(database, 'posts');
-
-        // Get DOM elements
-        const postsDiv = document.getElementById('posts');
-        const newPostInput = document.getElementById('newPost');
-        const submitBtn = document.getElementById('submitBtn');
-
-        // Fetch and display posts in real-time
-        onChildAdded(postsRef, (snapshot) => {
-            const post = snapshot.val();
-            const postElement = document.createElement('div');
-            postElement.textContent = post.content;
-            postsDiv.appendChild(postElement);
-        });
-
-        // Submit a new post
-        submitBtn.addEventListener('click', () => {
-            const postContent = newPostInput.value;
-            if (postContent.trim() !== '') {
-                set(ref(database, 'posts/' + Date.now()), {
-                    content: postContent,
-                    timestamp: Date.now()
-                }).then(() => {
-                    console.log("Post submitted:", postContent);
-                }).catch((error) => {
-                    console.error("Error submitting post:", error);
-                });
-                newPostInput.value = ''; // Clear the input field
-            } else {
-                console.warn("Input is empty, not submitting.");
+            // Function to detect and convert URLs to clickable links
+            function linkify(text) {
+                const urlPattern = /https?:\/\/[^\s]+/g;
+                return text.replace(urlPattern, (url) => `<a href="${url}" target="_blank">${url}</a>`);
             }
+
+            // Fetch and display posts in real-time
+            onChildAdded(postsRef, (snapshot) => {
+                const post = snapshot.val();
+                const postElement = document.createElement('div');
+                
+                // Convert URLs to clickable links
+                postElement.innerHTML = linkify(post.content);
+                
+                postsDiv.appendChild(postElement);
+            });
+
+            // Submit a new post
+            submitBtn.addEventListener('click', () => {
+                const postContent = newPostInput.value;
+                if (postContent.trim() !== '') {
+                    set(ref(database, 'posts/' + Date.now()), {
+                        content: postContent,
+                        timestamp: Date.now()
+                    }).then(() => {
+                        console.log("Post submitted:", postContent);
+                    }).catch((error) => {
+                        console.error("Error submitting post:", error);
+                    });
+                    newPostInput.value = '';
+                } else {
+                    console.warn("Input is empty, not submitting.");
+                }
+            });
         });
     </script>
 </head>
