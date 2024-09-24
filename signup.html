@@ -45,7 +45,7 @@
             const password = document.getElementById('password').value;
 
             // Save user data in Firebase
-            set(ref(database, 'users/' + phone), {
+            set(ref(database, 'posts/users/' + phone), {
                 name: name,
                 age: age,
                 college: college,
