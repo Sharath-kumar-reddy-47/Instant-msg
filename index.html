@@ -26,10 +26,13 @@
             const newPostInput = document.getElementById('newPost');
             const submitBtn = document.getElementById('submitBtn');
 
-            // Function to detect and convert URLs to clickable links
-            function linkify(text) {
-                const urlPattern = /https?:\/\/[^\s]+/g;
-                return text.replace(urlPattern, (url) => `<a href="${url}" target="_blank">${url}</a>`);
+            // Function to detect @links and convert them to clickable links
+            function processLinkSymbol(text) {
+                const linkPattern = /@https?:\/\/[^\s]+/g;
+                return text.replace(linkPattern, (match) => {
+                    const url = match.slice(1); // Remove the '@' symbol
+                    return `<a href="${url}" target="_blank">${url}</a>`;
+                });
             }
 
             // Fetch and display posts in real-time
@@ -37,8 +40,8 @@
                 const post = snapshot.val();
                 const postElement = document.createElement('div');
                 
-                // Convert URLs to clickable links
-                postElement.innerHTML = linkify(post.content);
+                // Convert @links to clickable links
+                postElement.innerHTML = processLinkSymbol(post.content);
                 
                 postsDiv.appendChild(postElement);
             });
