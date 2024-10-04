@@ -65,7 +65,7 @@
                 const username = postData.username || 'Anonymous'; // Retrieve username or fallback to 'Anonymous' if not available
 
                 // Display username, content, and timestamp
-                postElement.innerHTML = `<strong>${username}:</strong> <p>${content}</p><small>${timestamp}</small>`;
+                postElement.innerHTML = `<p>${username}:</p> <p>${content}</p><small>${timestamp}</small><br><br>`;
                 
                 postsDiv.appendChild(postElement);
             }
