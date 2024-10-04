@@ -77,21 +77,25 @@
             // Submit a new post
             submitBtn.addEventListener('click', () => {
                 const postContent = newPostInput.value;
-                if (postContent.trim() !== '') {
+                const username = sessionStorage.getItem('username');  // Get the stored username
+
+                if (postContent.trim() !== '' && username) {
                     const postId = 'postId_' + Date.now();  // Generate a unique ID for each post
                     set(ref(database, 'posts/' + postId), {
                         content: postContent,
+                        username: username,   // Include the username in the post data
                         timestamp: Date.now()  // Store the current timestamp
                     }).then(() => {
                         console.log("Post submitted:", postContent);
                     }).catch((error) => {
                         console.error("Error submitting post:", error);
                     });
-                    newPostInput.value = '';  // Clear input field after submitting
+                    newPostInput.value = '';  // Clear the input field after submitting
                 } else {
-                    console.warn("Input is empty, not submitting.");
+                    console.warn("Input is empty or username is missing, not submitting.");
                 }
             });
+
         });
     </script>
 </head>
