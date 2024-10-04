@@ -60,15 +60,16 @@
             // Function to display each post with content and timestamp
             function displayPost(postData) {
                 const postElement = document.createElement('div');
-    
-                // Convert timestamp to a readable date format
-                const postDate = new Date(post.timestamp).toLocaleString();
+                const content = processText(postData.content);
+                const timestamp = new Date(postData.timestamp).toLocaleString(); // Format timestamp
+                const username = postData.username || 'Anonymous'; // Retrieve username or fallback to 'Anonymous' if not available
 
-                // Display the username, message content, and timestamp
-                postElement.innerHTML = `<strong>${post.username}:</strong> ${post.content} <br><span class="timestamp">${postDate}</span>`;
+                // Display username, content, and timestamp
+                postElement.innerHTML = `<strong>${username}:</strong> <p>${content}</p><small>${timestamp}</small>`;
                 
                 postsDiv.appendChild(postElement);
             }
+
 
             // Fetch and display posts in real-time
             onChildAdded(postsRef, (snapshot) => {
