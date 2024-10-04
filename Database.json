@@ -1,0 +1,25 @@
+{
+    "posts": {
+      "postId_1627382923000": {
+        "content": "This is updated page",
+        "username":7658932306,
+        "timestamp": 1627382923000
+      },
+      "postId_1627385934000": {
+        "content": "Hello world!",
+        "username":7658932306,
+        "timestamp": 1627385934000
+      }
+    },
+    "users": {
+      "7658932306": {
+        "age": 22,
+        "college_name": "IIT Delhi",
+        "department": "Cyber Security",
+        "name": "sharath",
+        "password": "sharath",
+        "status": "approved"
+      }
+    }
+  }
+  
