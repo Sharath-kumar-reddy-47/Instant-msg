@@ -37,7 +37,7 @@ document.getElementById('signinForm').addEventListener('submit', function(event)
                 sessionStorage.setItem('username', userData.name);
                 
                 // Redirect to chat page
-                window.location.href = 'index_2.html'; 
+                window.location.href = 'chat.html'; 
             } else {
                 displayError('Incorrect password.');
             }
