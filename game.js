@@ -17,10 +17,10 @@ function displaySticks() {
     stickElements = []; // Reset the array of stick elements
 
     for (let i = 0; i < totalSticks; i++) {
-        // const stick = document.createElement("div");
-        // stick.className = "stick";
-        const stick = document.createElement("span");
+        const stick = document.createElement("div");
         stick.className = "stick";
+        // const stick = document.createElement("span");
+        // stick.className = "stick";
 
         sticksContainer.appendChild(stick);
         stickElements.push(stick); // Store the stick element for later use
