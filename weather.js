@@ -13,6 +13,7 @@ async function getloc(position) {
     temp.innerText=w_after_json.hourly.temperature_2m.slice(0,5);
 }
 function failloc(){
+    time.innerText="please allow location permission to see weather";
     console.log("issue");
 }
 window.addEventListener('load',()=>{
