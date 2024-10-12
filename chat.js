@@ -1,6 +1,8 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js";
 import { getDatabase, ref, set, onChildAdded } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-database.js";
 
+const loc=document.getElementById("location");
+const button=document.getElementById("button");
 document.addEventListener('DOMContentLoaded', () => {
     // Firebase configuration
 
@@ -90,4 +92,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+});
+
+async function getloc(position) {
+    const lat=position.coords.latitude;
+    const lng=position.coords.longitude;
+    const floc=await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`);
+    const afterjson=await floc.json();
+    const place=afterjson.display_name;
+    loc.innerText=place;
+}
+
+function failloc(){
+    loc.innerText='Please allow location permission to see your location';
+}
+button.addEventListener('click',()=>{
+    navigator.geolocation.getCurrentPosition(getloc,failloc);
 });
