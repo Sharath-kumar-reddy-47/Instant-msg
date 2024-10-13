@@ -3,6 +3,7 @@ import { getDatabase, ref, set, onChildAdded } from "https://www.gstatic.com/fir
 
 const loc=document.getElementById("location");
 const button=document.getElementById("button");
+const time=document.getElementById("time");
 document.addEventListener('DOMContentLoaded', () => {
     // Firebase configuration
 
@@ -109,3 +110,10 @@ function failloc(){
 button.addEventListener('click',()=>{
     navigator.geolocation.getCurrentPosition(getloc,failloc);
 });
+
+function getTime(){
+    const date_time=new Date();
+    const cur=`${date_time.getHours()}:${date_time.getMinutes()}:${date_time.getSeconds()}`
+    time.innerText=cur;
+}
+setInterval(getTime,1000);
