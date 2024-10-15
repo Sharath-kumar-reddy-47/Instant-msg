@@ -1,0 +1,45 @@
+/* General body styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f4f8;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    text-align: center;
+}
+
+h2 {
+    font-size: 1.8em;
+    color: #007bff;
+    margin-bottom: 10px;
+}
+
+h3 {
+    color: #555;
+    margin-bottom: 20px;
+}
+
+#weather-info p {
+    font-size: 1.1em;
+    margin-bottom: 10px;
+}
+
+#time p, #temp p {
+    margin: 5px 0;
+    font-size: 1.2em;
+}
+
+strong {
+    color: #333;
+}

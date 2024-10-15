@@ -7,18 +7,26 @@
     <link rel="stylesheet" href="gameStyle.css">
 </head>
 <body>
-    <h1>Stick Game</h1>
-    <p>This game can be played by 2 people</p>
-    <h2>Rules</h2>
-    <p>There are 10 sticks. Each player can pick a number either 1 or 2 sticks, then it’s the other player's turn. The player who is not able to pick either 1 or 2 sticks loses the game.</p>
-    <button id="game">Start</button>
-    <div id="sticks"></div>
-    <p id="player"></p>
-    <p id="player1"></p>
-    <p id="player2"></p>
-    <div class="message" id="message"></div>
-    <div class="message2" id="message2"></div>
-    
+    <div class="container">
+        <h1>Stick Game</h1>
+        <p class="description">A fun strategy game for two players!</p>
+
+        <h2>How to Play</h2>
+        <p class="rules">There are 10 sticks. Each player can pick either 1 or 2 sticks per turn. The player who cannot make a move loses the game.</p>
+
+        <button id="game" class="start-button">Start Game</button>
+
+        <div id="sticks" class="stick-container"></div>
+
+        <div class="instructions">
+            <p id="player"></p>
+            <p id="player1"></p>
+            <p id="player2"></p>
+        </div>
+
+        <div class="message" id="message"></div>
+        <div class="message" id="message2"></div>
+    </div>
 
     <script src="game.js"></script>
 </body>

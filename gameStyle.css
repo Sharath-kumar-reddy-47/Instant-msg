@@ -1,9 +1,79 @@
+/* General layout */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
 
+/* Container to center the game */
+.container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 600px;
+    width: 100%;
+}
+
+/* Heading styles */
+h1 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+h2 {
+    color: #444;
+    margin-bottom: 10px;
+}
+
+/* Text styles */
+p {
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.description {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.rules {
+    font-size: 16px;
+    color: #555;
+}
+
+/* Button styling */
+.start-button, button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.start-button:hover, button:hover {
+    background-color: #45a049;
+}
+
+/* Stick container styling */
 #sticks {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     margin-top: 20px;
 }
+
 .stick {
     width: 30px;
     height: 100px;
@@ -11,15 +81,26 @@
     margin: 5px;
     border-radius: 5px;
     position: relative;
+    transition: background-color 0.3s;
 }
-.stick.taken {
-    background-color: gray; /* Optional class for the "taken" color */
-}
+
+/* Message styling */
 .message {
     margin-top: 20px;
     font-size: 20px;
+    font-weight: bold;
+    color: #d9534f;
 }
+
 .message2 {
-    margin-top: 20px;
-    font-size: 20px;
+    margin-top: 10px;
+    font-size: 18px;
+    color: #5cb85c;
+}
+
+/* Instructions for players */
+.instructions p {
+    font-size: 14px;
+    color: #666;
+    margin: 5px 0;
 }
